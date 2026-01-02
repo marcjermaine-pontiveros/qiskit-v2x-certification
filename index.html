@@ -3,11 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Qiskit V2X Certification</title>
+    <title>Qiskit v2.x Certification Practice Exam</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 40px;
+            margin: 20px;
             background-color: #f4f4f4;
         }
         .container {
@@ -18,21 +18,456 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0,0,0,0.1);
         }
-        h1 {
+        h1, h2 {
             color: #333;
         }
-        p {
-            line-height: 1.6;
+        .question {
+            margin-bottom: 20px;
+        }
+        .options {
+            margin-left: 20px;
+        }
+        .options label {
+            display: block;
+            margin: 5px 0;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .correct {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .incorrect {
+            background-color: #f8d7da;
+            color: #721c24;
+        }
+        .explanation {
+            margin-top: 10px;
+            font-style: italic;
+        }
+        .score {
+            font-size: 1.2em;
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Welcome to Qiskit V2X Certification</h1>
-        <p>This repository is dedicated to Qiskit V2X certification materials and resources.</p>
-        <p>Qiskit is an open-source quantum computing framework developed by IBM. V2X likely refers to Vehicle-to-Everything communication, integrating quantum technologies.</p>
-        <p>Here you will find certification guides, tutorials, and example code.</p>
-        <p>For more information, visit the <a href="https://github.com/marcjermaine-pontiveros/qiskit-v2x-certification">GitHub repository</a>.</p>
+        <h1>Qiskit v2.x Certification — Practice Exam (30 MCQs)</h1>
+        <p><strong>Instructions</strong></p>
+        <ul>
+            <li>Time limit: <strong>60 minutes</strong></li>
+            <li>Choose the <strong>single best answer</strong> (A–D) for each question.</li>
+            <li>No calculators or external tools required.</li>
+        </ul>
+        <p><strong>Scope alignment:</strong> This practice exam is aligned with the <em>Qiskit v2.X Certification exam guide/syllabus</em> (topics include operators, visualization, circuits (incl. dynamic + parameterized), transpilation, execution modes, Runtime primitives (Sampler/Estimator), job retrieval/monitoring, OpenQASM 2/3 interoperability, and Runtime REST API).</p>
+
+        <form id="quizForm">
+            <!-- Questions will be inserted here by JS -->
+        </form>
+        <button id="submitBtn">Submit Quiz</button>
+        <div id="results" style="display: none;">
+            <h2>Results</h2>
+            <div id="score"></div>
+            <div id="answers"></div>
+        </div>
     </div>
+
+    <script>
+        const questions = [
+            {
+                question: "Which Qiskit class is commonly used to represent <strong>a sum of Pauli strings</strong> efficiently (for example, a Hamiltonian expressed as a weighted sum of tensor-product Paulis)?",
+                options: [
+                    "A. <code>qiskit.quantum_info.Operator</code>",
+                    "B. <code>qiskit.quantum_info.SparsePauliOp</code>",
+                    "C. <code>qiskit.quantum_info.Statevector</code>",
+                    "D. <code>qiskit.circuit.Gate</code>"
+                ],
+                correct: 1,
+                explanation: "<code>SparsePauliOp</code> is designed for sums of Pauli strings and is common for Hamiltonians."
+            },
+            {
+                question: "Which statement is <strong>most accurate</strong> about the <code>Operator</code> class?",
+                options: [
+                    "A. It represents only Clifford operations and stores them as symplectic matrices.",
+                    "B. It represents general linear operators and can be used to obtain a matrix representation of a circuit/unitary.",
+                    "C. It represents measurement outcomes as bitstrings.",
+                    "D. It is only valid for diagonal operators."
+                ],
+                correct: 1,
+                explanation: "<code>Operator</code> represents general linear operators and can give matrix representations."
+            },
+            {
+                question: "In Qiskit, a single-qubit <code>Pauli(\"Y\")</code> corresponds (up to a global phase convention) to which matrix?",
+                options: [
+                    "A. \\( \\begin{pmatrix} 0 & 1 \\\\ 1 & 0 \\end{pmatrix} \\)",
+                    "B. \\( \\begin{pmatrix} 1 & 0 \\\\ 0 & -1 \\end{pmatrix} \\)",
+                    "C. \\( \\begin{pmatrix} 0 & -i \\\\ i & 0 \\end{pmatrix} \\)",
+                    "D. \\( \\begin{pmatrix} 1 & 0 \\\\ 0 & 1 \\end{pmatrix} \\)"
+                ],
+                correct: 2,
+                explanation: "Pauli-Y is \\( \\begin{pmatrix} 0 & -i \\\\ i & 0 \\end{pmatrix} \\)."
+            },
+            {
+                question: "You apply an <code>X</code> gate to \\(|0\\rangle\\). What state do you obtain (ignoring global phase)?",
+                options: [
+                    "A. \\(|0\\rangle\\)",
+                    "B. \\(|1\\rangle\\)",
+                    "C. \\((|0\\rangle + |1\\rangle)/\\sqrt{2}\\)",
+                    "D. \\((|0\\rangle - |1\\rangle)/\\sqrt{2}\\)"
+                ],
+                correct: 1,
+                explanation: "<code>X|0⟩ = |1⟩</code>."
+            },
+            {
+                question: "Which call draws a circuit using Matplotlib (when installed), rather than plain text?",
+                options: [
+                    "A. <code>qc.draw()</code>",
+                    "B. <code>qc.draw(\"mpl\")</code>",
+                    "C. <code>qc.plot()</code>",
+                    "D. <code>qc.visualize()</code>"
+                ],
+                correct: 1,
+                explanation: "<code>qc.draw(\"mpl\")</code> requests Matplotlib output."
+            },
+            {
+                question: "You ran a circuit and obtained a <code>counts</code> dictionary from results. Which utility is typically used to visualize the counts as a histogram?",
+                options: [
+                    "A. <code>plot_state_city(counts)</code>",
+                    "B. <code>plot_histogram(counts)</code>",
+                    "C. <code>plot_bloch_multivector(counts)</code>",
+                    "D. <code>plot_density_matrix(counts)</code>"
+                ],
+                correct: 1,
+                explanation: "<code>plot_histogram(counts)</code> visualizes counts."
+            },
+            {
+                question: "Which visualization is <strong>most appropriate</strong> for a <strong>single-qubit</strong> pure state to show it on the Bloch sphere?",
+                options: [
+                    "A. <code>plot_bloch_multivector(state)</code>",
+                    "B. <code>plot_state_city(state)</code>",
+                    "C. <code>plot_histogram(state)</code>",
+                    "D. <code>plot_gate_map(state)</code>"
+                ],
+                correct: 0,
+                explanation: "Bloch multivector plotting is appropriate for single-qubit states."
+            },
+            {
+                question: "Which line creates a circuit with <strong>2 qubits</strong> and <strong>2 classical bits</strong>?",
+                options: [
+                    "A. <code>QuantumCircuit(2)</code>",
+                    "B. <code>QuantumCircuit(2, 2)</code>",
+                    "C. <code>QuantumCircuit(qubits=2, bits=2)</code>",
+                    "D. <code>QuantumCircuit(q=2, c=2)</code>"
+                ],
+                correct: 1,
+                explanation: "<code>QuantumCircuit(2, 2)</code> creates 2 qubits and 2 classical bits."
+            },
+            {
+                question: "Which statement best describes a <code>qiskit.circuit.Parameter</code>?",
+                options: [
+                    "A. It is a run-time variable that can change mid-circuit based on measurements.",
+                    "B. It is a compile-time symbolic parameter that must be assigned before execution.",
+                    "C. It is a measurement result container.",
+                    "D. It is used only for OpenQASM 2."
+                ],
+                correct: 1,
+                explanation: "<code>Parameter</code> is a compile-time symbol; assign before execution."
+            },
+            {
+                question: "Given the code, which method is the standard way to produce a circuit with a concrete numerical value for <code>theta</code>?",
+                options: [
+                    "A. <code>qc.resolve_parameters({theta: 0.5})</code>",
+                    "B. <code>qc.assign_parameters({theta: 0.5})</code>",
+                    "C. <code>qc.bind({theta: 0.5})</code>",
+                    "D. <code>qc.update_parameters({theta: 0.5})</code>"
+                ],
+                correct: 1,
+                explanation: "<code>assign_parameters</code> is the standard binding method."
+            },
+            {
+                question: "In Qiskit SDK, OpenQASM 3-style conditional <code>if</code> statements (based on classical values) correspond most directly to which circuit construct?",
+                options: [
+                    "A. <code>QuantumCircuit.if_test(...)</code> used as a context manager",
+                    "B. <code>QuantumCircuit.qasm()</code>",
+                    "C. <code>QuantumCircuit.delay(...)</code>",
+                    "D. <code>QuantumCircuit.inverse()</code>"
+                ],
+                correct: 0,
+                explanation: "Qiskit uses <code>if_test</code> as a context manager for conditional blocks."
+            },
+            {
+                question: "According to IBM Quantum documentation, Qiskit Runtime currently supports which OpenQASM 3 control-flow structure(s)?",
+                options: [
+                    "A. <code>if</code>, <code>for</code>, and <code>while</code>",
+                    "B. <code>switch</code> only",
+                    "C. Only conditional <code>if</code>",
+                    "D. Full OpenQASM 3 control-flow including <code>while</code>"
+                ],
+                correct: 2,
+                explanation: "Runtime currently supports only conditional <code>if</code>."
+            },
+            {
+                question: "What is the primary purpose of <strong>classical bits</strong> in a <code>QuantumCircuit</code>?",
+                options: [
+                    "A. They store quantum amplitudes after each gate.",
+                    "B. They store measurement outcomes and can be used for classical feedforward conditions.",
+                    "C. They represent noise channels.",
+                    "D. They are required for transpilation."
+                ],
+                correct: 1,
+                explanation: "Classical bits store measurement outcomes and enable feedforward."
+            },
+            {
+                question: "What is the main purpose of <code>transpile(...)</code>?",
+                options: [
+                    "A. Convert measurement counts to probabilities.",
+                    "B. Map and optimize a circuit for a target backend’s constraints (basis gates, coupling, timing, etc.).",
+                    "C. Convert a circuit into a statevector simulator.",
+                    "D. Compute expectation values of observables."
+                ],
+                correct: 1,
+                explanation: "<code>transpile</code> maps/optimizes a circuit to a backend’s constraints."
+            },
+            {
+                question: "Which statement about <code>optimization_level</code> is most accurate?",
+                options: [
+                    "A. Higher levels always produce identical circuits, just faster compilation.",
+                    "B. Higher levels generally apply more aggressive optimizations but can increase compile time.",
+                    "C. <code>optimization_level</code> only changes measurement error mitigation.",
+                    "D. <code>optimization_level</code> is only valid for simulators."
+                ],
+                correct: 1,
+                explanation: "Higher optimization can reduce depth but costs compile time."
+            },
+            {
+                question: "If a 2-qubit gate in your circuit acts on qubits that are <strong>not directly connected</strong> on the target hardware, transpilation typically:",
+                options: [
+                    "A. Deletes that gate.",
+                    "B. Inserts SWAPs (or equivalent routing) to satisfy connectivity.",
+                    "C. Converts the gate into a measurement.",
+                    "D. Forces you to rewrite the circuit manually; transpile cannot route."
+                ],
+                correct: 1,
+                explanation: "Routing typically inserts SWAPs or equivalent."
+            },
+            {
+                question: "A backend supports only <code>{rz, sx, x, cx, measure}</code> (plus delays). What will transpilation generally do to a circuit containing <code>h</code> gates?",
+                options: [
+                    "A. It will fail, because <code>h</code> cannot be expressed using that basis.",
+                    "B. It will decompose <code>h</code> into supported basis gates (e.g., combinations of <code>rz</code> and <code>sx</code>).",
+                    "C. It will keep <code>h</code> unchanged because basis gates are optional.",
+                    "D. It will replace <code>h</code> with <code>x</code>."
+                ],
+                correct: 1,
+                explanation: "Gates are decomposed into the backend basis."
+            },
+            {
+                question: "IBM Quantum documentation describes three Qiskit Runtime execution modes. Which set is correct?",
+                options: [
+                    "A. <code>local</code>, <code>remote</code>, <code>hybrid</code>",
+                    "B. <code>job</code>, <code>session</code>, <code>batch</code>",
+                    "C. <code>run</code>, <code>compile</code>, <code>execute</code>",
+                    "D. <code>queue</code>, <code>priority</code>, <code>reserved</code>"
+                ],
+                correct: 1,
+                explanation: "Execution modes: job, session, batch."
+            },
+            {
+                question: "Which scenario best matches <strong>session mode</strong>?",
+                options: [
+                    "A. You have a single, one-off job and want the simplest submission.",
+                    "B. You want dedicated access to a QPU for iterative workloads where reducing queue overhead matters.",
+                    "C. You want to submit hundreds of independent jobs and let them queue independently.",
+                    "D. You need only local simulation."
+                ],
+                correct: 1,
+                explanation: "Sessions reduce overhead for iterative workloads and can provide dedicated access."
+            },
+            {
+                question: "Which statement best describes <strong>batch mode</strong>?",
+                options: [
+                    "A. It is only for statevector simulations.",
+                    "B. It submits multiple primitive jobs simultaneously and is useful for parallelizable workloads.",
+                    "C. It guarantees exclusive QPU access for one user.",
+                    "D. It disables all transpilation."
+                ],
+                correct: 1,
+                explanation: "Batch mode submits multiple primitive jobs simultaneously."
+            },
+            {
+                question: "Which statement best differentiates the primitives?",
+                options: [
+                    "A. Sampler returns expectation values; Estimator returns bitstrings.",
+                    "B. Sampler returns sampled measurement outcomes; Estimator returns expectation values of observables.",
+                    "C. Both return only statevectors.",
+                    "D. Both return only unitary matrices."
+                ],
+                correct: 1,
+                explanation: "Sampler returns samples; Estimator returns expectation values."
+            },
+            {
+                question: "A key interface difference between V1 and V2 Sampler is:",
+                options: [
+                    "A. V2 returns quasi-probability distributions, V1 returns per-shot outcomes.",
+                    "B. V2 returns per-shot measurement bitstrings (shot-resolved outcomes), V1 returned quasi-distributions.",
+                    "C. V2 does not support measurements.",
+                    "D. V2 only runs on simulators."
+                ],
+                correct: 1,
+                explanation: "V2 Sampler returns per-shot bitstrings; V1 returned quasi-distributions."
+            },
+            {
+                question: "How do you set a primitive’s resilience level in the V2 interface?",
+                options: [
+                    "A. Pass <code>resilience_level</code> as the first positional argument to <code>run()</code>.",
+                    "B. Set <code>primitive.options.resilience_level = &lt;int&gt;</code> before <code>run()</code>.",
+                    "C. Use <code>primitive.resilience_level(&lt;int&gt;)</code>.",
+                    "D. Use <code>backend.set_resilience_level(&lt;int&gt;)</code>."
+                ],
+                correct: 1,
+                explanation: "Set <code>primitive.options.resilience_level</code>."
+            },
+            {
+                question: "If you want to <strong>bypass</strong> built-in runtime error mitigations and implement your own, which is the documented starting point?",
+                options: [
+                    "A. Set <code>resilience_level = 0</code>",
+                    "B. Set <code>optimization_level = 0</code>",
+                    "C. Set <code>shots = 0</code>",
+                    "D. Use OpenQASM 2 instead of OpenQASM 3"
+                ],
+                correct: 0,
+                explanation: "Set <code>resilience_level = 0</code> to bypass built-in mitigation."
+            },
+            {
+                question: "When using the V2 Estimator, which result fields are guaranteed to be returned (even if additional mitigation fields are enabled)?",
+                options: [
+                    "A. Only <code>quasi_dists</code> and <code>metadata</code>",
+                    "B. <code>evs</code> and <code>stds</code> (expectation values and standard errors)",
+                    "C. Only raw bitstrings",
+                    "D. Only the transpiled circuit"
+                ],
+                correct: 1,
+                explanation: "V2 Estimator guarantees <code>evs</code> and <code>stds</code> fields."
+            },
+            {
+                question: "Zero-noise extrapolation (ZNE) options in IBM Runtime are used by:",
+                options: [
+                    "A. SamplerV2 only",
+                    "B. EstimatorV2 only",
+                    "C. Both SamplerV2 and EstimatorV2",
+                    "D. Neither (ZNE is not supported)"
+                ],
+                correct: 1,
+                explanation: "ZNE options are for V2 Estimator."
+            },
+            {
+                question: "You previously submitted a runtime job and saved its job ID. Which method retrieves the job object?",
+                options: [
+                    "A. <code>service.get_job(job_id)</code>",
+                    "B. <code>service.job(job_id)</code>",
+                    "C. <code>backend.job(job_id)</code>",
+                    "D. <code>runtime.job(job_id)</code>"
+                ],
+                correct: 1,
+                explanation: "Retrieve by <code>service.job(job_id)</code>."
+            },
+            {
+                question: "Which action is the documented way to stop/cancel a job from Python once you have a job object?",
+                options: [
+                    "A. <code>job.terminate()</code>",
+                    "B. <code>job.stop()</code>",
+                    "C. <code>job.kill()</code>",
+                    "D. <code>job.abort()</code>"
+                ],
+                correct: 1,
+                explanation: "Cancel/stop via <code>job.stop()</code>."
+            },
+            {
+                question: "Which pair of functions is used to export a <code>QuantumCircuit</code> to an OpenQASM 3 program?",
+                options: [
+                    "A. <code>qiskit.qasm3.dump()</code> and <code>qiskit.qasm3.dumps()</code>",
+                    "B. <code>qiskit.qasm3.save()</code> and <code>qiskit.qasm3.stringify()</code>",
+                    "C. <code>QuantumCircuit.qasm()</code> and <code>QuantumCircuit.to_qasm3()</code>",
+                    "D. <code>qiskit.qasm2.dump()</code> and <code>qiskit.qasm2.dumps()</code>"
+                ],
+                correct: 0,
+                explanation: "OpenQASM 3 export uses <code>qiskit.qasm3.dump(s)</code> / <code>dumps</code>."
+            },
+            {
+                question: "In Qiskit 1.0+ / 2.x, the legacy <code>QuantumCircuit.qasm()</code> method is removed. What is the recommended replacement to get an OpenQASM 2 string?",
+                options: [
+                    "A. <code>qiskit.qasm2.dumps(qc)</code>",
+                    "B. <code>qiskit.qasm3.dumps(qc)</code>",
+                    "C. <code>qc.to_openqasm2()</code>",
+                    "D. <code>qc.serialize(\"qasm2\")</code>"
+                ],
+                correct: 0,
+                explanation: "OpenQASM 2 string export uses <code>qiskit.qasm2.dumps(qc)</code>."
+            }
+        ];
+
+        const quizForm = document.getElementById('quizForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const resultsDiv = document.getElementById('results');
+        const scoreDiv = document.getElementById('score');
+        const answersDiv = document.getElementById('answers');
+
+        // Generate quiz questions
+        questions.forEach((q, index) => {
+            const questionDiv = document.createElement('div');
+            questionDiv.className = 'question';
+            questionDiv.innerHTML = `<h3>Q${index + 1}. ${q.question}</h3>`;
+            const optionsDiv = document.createElement('div');
+            optionsDiv.className = 'options';
+            q.options.forEach((option, i) => {
+                const label = document.createElement('label');
+                label.innerHTML = `<input type="radio" name="q${index}" value="${i}"> ${option}`;
+                optionsDiv.appendChild(label);
+            });
+            questionDiv.appendChild(optionsDiv);
+            quizForm.appendChild(questionDiv);
+        });
+
+        submitBtn.addEventListener('click', () => {
+            let score = 0;
+            const answersHTML = [];
+            questions.forEach((q, index) => {
+                const selected = document.querySelector(`input[name="q${index}"]:checked`);
+                const userAnswer = selected ? parseInt(selected.value) : -1;
+                const isCorrect = userAnswer === q.correct;
+                if (isCorrect) score++;
+                const resultClass = isCorrect ? 'correct' : 'incorrect';
+                const userChoice = userAnswer >= 0 ? q.options[userAnswer] : 'No answer';
+                const correctChoice = q.options[q.correct];
+                answersHTML.push(`
+                    <div class="result ${resultClass}">
+                        <strong>Q${index + 1}:</strong> ${isCorrect ? 'Correct' : 'Incorrect'}<br>
+                        Your answer: ${userChoice}<br>
+                        Correct answer: ${correctChoice}<br>
+                        <div class="explanation">${q.explanation}</div>
+                    </div>
+                `);
+            });
+            scoreDiv.innerHTML = `<div class="score">Your Score: ${score} / ${questions.length}</div>`;
+            answersDiv.innerHTML = answersHTML.join('');
+            resultsDiv.style.display = 'block';
+            submitBtn.style.display = 'none';
+        });
+    </script>
 </body>
 </html>
